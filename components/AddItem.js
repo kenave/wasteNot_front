@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, FlatList } from 'react-native';
 import { Formik } from 'formik';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 export default function AddItem(props) {
   const now = new Date()
+  const [chosenExpirationDate, setChosenExpirationDate] = useState('select expiration date')
   const [datePickerVisible, setDatePickerVisible] = useState(false)
 
   const showDatePicker = () => {
@@ -17,6 +18,8 @@ export default function AddItem(props) {
 
   const handleDatePicked = date => {
     console.log("A date has been picked: ", date)
+    let dateString = date.toDateString()
+    setChosenExpirationDate(dateString)
     hideDatePicker()
   }
 
@@ -45,19 +48,14 @@ export default function AddItem(props) {
               onChangeText={props.handleChange('measurementType')}
               value={props.values.measurementType}
             />
-            <>
-              <Button title="Show DatePicker" onPress={() => showDatePicker()} />
-              {/* {console.log("date picker:", datePickerVisible)} */}
-              {/* {console.log("props:", props)} */}
-              <DateTimePicker
-                isVisible={false}
-                onConfirm={handleDatePicked}
-                onCancel={hideDatePicker}
-                date={props.values.expirationDate}
-                mode='date'
-                value={now}
-              />
-            </>
+            <Button title={chosenExpirationDate} onPress={() => showDatePicker()} />
+            <DateTimePickerModal
+              isVisible={datePickerVisible}
+              onConfirm={handleDatePicked}
+              onCancel={hideDatePicker}
+              mode='date'
+              value={now}
+            />
             <Button title='Add Item' onPress={(e) => props.handleSubmit(e)}/>
           </View>
         )}
@@ -83,8 +81,7 @@ const styles = StyleSheet.create({
   },
   form: {
     alignItems: 'center',
-    padding: 0,
-    backgroundColor: 'pink'
+    padding: 5,
   },
   picker: {
     padding: 5,
