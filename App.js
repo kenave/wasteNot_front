@@ -10,7 +10,6 @@ export default function App() {
     <Navigator />
   )
 
-
   // -------------------- BEFORE SCREENS IMPLEMENTED ------------------------ //
 
   // const [user, setUser] = useState(1)
@@ -49,19 +48,4 @@ export default function App() {
   //     </View>
   //   </View>
   // );
-} 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inventoryContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-});
+}

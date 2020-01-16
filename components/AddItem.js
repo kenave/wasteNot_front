@@ -4,8 +4,7 @@ import { Formik } from 'formik';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 export default function AddItem(props) {
-  const now = new Date()
-  const [chosenExpirationDate, setChosenExpirationDate] = useState('select expiration date')
+  const now = new Date().toDateString().slice(4)
   const [datePickerVisible, setDatePickerVisible] = useState(false)
 
   const showDatePicker = () => {
@@ -16,17 +15,10 @@ export default function AddItem(props) {
     setDatePickerVisible(false)
   }
 
-  const handleDatePicked = date => {
-    console.log("A date has been picked: ", date)
-    let dateString = date.toDateString()
-    setChosenExpirationDate(dateString)
-    hideDatePicker()
-  }
-
   return (
     <View style={styles.form}>
       <Formik style={styles.form}
-        initialValues={{name: '', quantity: '', measurementType: '', datePurchased: now, expirationDate: ''}}
+        initialValues={{name: '', quantity: '', measurementType: '', datePurchased: now, expirationDate: 'select expiration date'}}
         onSubmit={(values) => {
           console.log("submitted:",values)
         }}
@@ -48,13 +40,17 @@ export default function AddItem(props) {
               onChangeText={props.handleChange('measurementType')}
               value={props.values.measurementType}
             />
-            <Button title={chosenExpirationDate} onPress={() => showDatePicker()} />
+            <Button title={props.values.expirationDate} onPress={() => showDatePicker()} />
             <DateTimePickerModal
               isVisible={datePickerVisible}
-              onConfirm={handleDatePicked}
+              onConfirm={(date) => {
+                let dateString = date.toDateString().slice(4)
+                props.setValues({...props.values, 'expirationDate': dateString})
+                hideDatePicker()
+              }}
               onCancel={hideDatePicker}
               mode='date'
-              value={now}
+              value={props.values.expirationDate}
             />
             <Button title='Add Item' onPress={(e) => props.handleSubmit(e)}/>
           </View>
