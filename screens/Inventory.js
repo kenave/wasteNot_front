@@ -8,36 +8,58 @@ import AddItem from '../components/AddItem';
 export default function Inventory({ navigation }){
   const [modalOpen, setModalOpen] = useState(false)
   const [inventory, setInventory] = useState([
-    {"id": "1", "name": "test1", "quantity": "", "measurement_type": ""},
-    {"id": "2", "name": "test2", "quantity": "", "measurement_type": ""}
+    {"id": "1", "name": "server loading", "quantity": "please wait...", "measurement_type": ""}
   ])
+  const [user, setUser] = useState('1')
 
   useEffect(() => {
     const fetchInventory = async () => {
-      let id = 1
-      const result = await fetch(`http://localhost:3000/api/v1/user/${id}/ingredients`)
-        .then(resp => resp.json())
-        .then(data => setInventory(data))
+      const result = await fetch(`http://localhost:3000/api/v1/user/${user}/ingredients`)
+      .then(resp => resp.json())
+      // .then(data => setInventory(data))
+      .then(data => console.log(data))
+      // .then(data => generateCombinedInventory(data))
     }
-
     fetchInventory()
   }, [])
 
-  // const pressHandler = () => {
-  //   navigation.navigate('ItemDetails')
-  // }
+  const handleAdd = (item) => {
+    setModalOpen(false)
+    fetch('http://localhost:3000/api/v1/user/1/ingredients', {
+      method: 'POST',  
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts": "application/json"
+      },
+      body: JSON.stringify({"ingredient": item})
+    })
+    .then(resp => resp.json())
+    // .then(data => console.log(data))
+    .then(data => setInventory(data))
+  }
+
+  const generateCombinedInventory = (fetchedInventory) => {
+    ingredients = Object.keys(fetchedInventory)
+    console.log("generate inventory",ingredients)
+    let totalQuantity = 0
+    if (ingredients.length > 0){
+      ingredients.forEach(i => {
+        console.log("fetchedInventory", fetchedInventory[i])
+      });
+    }
+  }
 
   return (
     <View style={globalStyles.container}>
-      <Modal visible={modalOpen}>
-        <View style={globalStyles.modalContent} animationType='slide'>
+      <Modal visible={modalOpen} animationType='slide'>
+        <View style={globalStyles.modalContent}>
           <Ionicons
             name='ios-close'
             size={24}
             style={{...globalStyles.modalToggle, ...globalStyles.modalClose}}
             onPress={() => setModalOpen(false)}
           />
-          <AddItem />
+          <AddItem handleAdd={handleAdd}/>
         </View>
       </Modal>
       <Ionicons 
@@ -46,7 +68,7 @@ export default function Inventory({ navigation }){
         style={globalStyles.modalToggle}
         onPress={() => setModalOpen(true)}
       />
-      {/* {console.log('Console Log', inventory)} */}
+      {console.log("INVENTORY:", inventory)}
       <FlatList
         keyExtractor={(item) => item.id}
         data={inventory}
@@ -56,10 +78,10 @@ export default function Inventory({ navigation }){
             navigation.navigate('ItemDetails', item)
           }}>
             <Card>
-              <Text style={globalStyles.titleText}>{item.name}, {item.quantity} {item.measurement_type}</Text>
+              <Text style={globalStyles.titleTextName}>{item.name}</Text>
+              <Text style={globalStyles.titleTextQuantity}>{item.quantity} {item.measurement_type}</Text>
             </Card>
           </TouchableOpacity>
-          // <InventoryItem ingredient={item}/>
         )}
       />
     </View>

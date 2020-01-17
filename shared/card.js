@@ -6,7 +6,7 @@ export default function Card(props){
 
   return (
     <View style={globalStyles.card}>
-      <View style={globalStyles.cardContent}>
+      <View style={props.itemDetails ? globalStyles.itemCardContent : globalStyles.cardContent}>
         { props.children }
       </View>
     </View>

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Button, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { globalStyles } from '../styles/global';
 
 export default function AddItem(props) {
-  const now = new Date().toDateString().slice(4)
+  const now = new Date().toDateString().slice(4).split(' ').join('-')
   const [datePickerVisible, setDatePickerVisible] = useState(false)
 
   const showDatePicker = () => {
@@ -16,43 +17,53 @@ export default function AddItem(props) {
   }
 
   return (
-    <View style={styles.form}>
+    <View style={globalStyles.container}>
       <Formik style={styles.form}
-        initialValues={{name: '', quantity: '', measurementType: '', datePurchased: now, expirationDate: 'select expiration date'}}
+        initialValues={{name: '', quantity: '', measurementType: '', datePurchased: now, expirationDate: 'Expiration Date', user:'1'}}
         onSubmit={(values) => {
           console.log("submitted:",values)
+          props.handleAdd(values)
         }}
       >
         {(props) => (
           <View>
-            <TextInput style={styles.form}
-              placeholder='Name'
+            <TextInput style={styles.formInput}
+              placeholder='Item Name'
               onChangeText={props.handleChange('name')}
               value={props.values.name}
             />
-            <TextInput style={styles.form}
-              placeholder='Quantity'
+            <TextInput style={styles.formInput}
+              placeholder='Quantity (number)'
               onChangeText={props.handleChange('quantity')}
               value={props.values.quantity}
+              keyboardType='numeric'
             />
-            <TextInput style={styles.form}
-              placeholder='Unit Type'
+            <TextInput style={styles.formInput}
+              placeholder='Unit Type (oz, gallons, L, count, container, etc.)'
               onChangeText={props.handleChange('measurementType')}
               value={props.values.measurementType}
             />
-            <Button title={props.values.expirationDate} onPress={() => showDatePicker()} />
-            <DateTimePickerModal
-              isVisible={datePickerVisible}
-              onConfirm={(date) => {
-                let dateString = date.toDateString().slice(4)
-                props.setValues({...props.values, 'expirationDate': dateString})
-                hideDatePicker()
-              }}
-              onCancel={hideDatePicker}
-              mode='date'
-              value={props.values.expirationDate}
-            />
-            <Button title='Add Item' onPress={(e) => props.handleSubmit(e)}/>
+            <TouchableOpacity onPress={() => showDatePicker()}>
+              <Text 
+                style={(props.values.expirationDate === props.initialValues.expirationDate) ? styles.defaultExpirationDateInput : styles.expirationDateInput}
+              >
+                {props.values.expirationDate}
+              </Text>
+              <DateTimePickerModal
+                isVisible={datePickerVisible}
+                onConfirm={(date) => {
+                  let dateString = date.toDateString().slice(4)
+                  dateString = dateString.split(' ').join('-')
+                  props.setValues({...props.values, 'expirationDate': dateString})
+                  hideDatePicker()
+                }}
+                onCancel={hideDatePicker}
+                mode='date'
+                value={props.values.expirationDate}
+              />
+            </TouchableOpacity>
+            {/* <Button title={props.values.expirationDate} onPress={() => showDatePicker()} /> */}
+            <Button title='Add Item' color='green' onPress={(e) => props.handleSubmit(e)}/>
           </View>
         )}
       </Formik>
@@ -70,7 +81,30 @@ export default function AddItem(props) {
 }
 
 const styles = StyleSheet.create({
-  input: {
+  formInput: {
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: '#ddd',
+    fontSize: 18,
+    marginBottom: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 6
+  },
+  defaultExpirationDateInput: {
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: '#ddd',
+    fontSize: 18,
+    marginBottom: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    color: 'gray'
+  },
+  expirationDateInput: {
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: '#ddd',
+    fontSize: 18,
     marginBottom: 10,
     paddingHorizontal: 8,
     paddingVertical: 6

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+// NOT IN USE
+
 export default function Navbar() {
   return (
     <View style={styles.navbar}>

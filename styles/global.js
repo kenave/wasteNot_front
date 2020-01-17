@@ -7,7 +7,21 @@ export const globalStyles = StyleSheet.create({
   },
   titleText: {
     fontSize: 18,
-    color: '#333'
+    color: '#333',
+  },
+  titleTextName: {
+    flex: 1,
+    fontSize: 18,
+    color: '#333',
+    textAlign: 'center'
+    // backgroundColor: 'red',
+  },  
+  titleTextQuantity: {
+    flex: 1,
+    fontSize: 18,
+    color: '#333',
+    // backgroundColor: 'green',
+    textAlign: 'center'
   },
   paragraph: {
     marginVertical: 8,
@@ -29,7 +43,12 @@ export const globalStyles = StyleSheet.create({
   },
   cardContent: {
     marginHorizontal: 18,
-    marginVertical: 10
+    marginVertical: 10,
+    flexDirection: 'row'
+  },
+  itemCardContent: {
+    marginHorizontal: 18,
+    marginVertical: 10,
   },
   modalToggle: {
     marginBottom: 10,
