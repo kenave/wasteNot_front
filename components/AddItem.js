@@ -60,6 +60,7 @@ export default function AddItem(props) {
                 onCancel={hideDatePicker}
                 mode='date'
                 value={props.values.expirationDate}
+                // contentContainerStyleIOS={{color: 'black', backgroundColor: 'black'}}
               />
             </TouchableOpacity>
             {/* <Button title={props.values.expirationDate} onPress={() => showDatePicker()} /> */}
@@ -87,8 +88,9 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     fontSize: 18,
     marginBottom: 10,
+    color: 'black',
     paddingHorizontal: 8,
-    paddingVertical: 6
+    paddingVertical: 6,
   },
   defaultExpirationDateInput: {
     borderWidth: 1,

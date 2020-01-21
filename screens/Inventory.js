@@ -4,6 +4,7 @@ import { globalStyles } from '../styles/global'
 import Card from '../shared/card'
 import { Ionicons } from '@expo/vector-icons'
 import AddItem from '../components/AddItem';
+import { ngrok } from "../shared/ngrok";
 
 export default function Inventory({ navigation }){
   const [modalOpen, setModalOpen] = useState(false)
@@ -14,7 +15,7 @@ export default function Inventory({ navigation }){
 
   useEffect(() => {
     const fetchInventory = async () => {
-      const result = await fetch(`http://localhost:3000/api/v1/user/${user}/ingredients`)
+      const result = await fetch(`${ngrok}/api/v1/user/${user}/ingredients`)
       .then(resp => resp.json())
       // .then(data => setInventory(data))
       // .then(data => console.log(data))
@@ -25,7 +26,7 @@ export default function Inventory({ navigation }){
 
   const handleAdd = (item) => {
     setModalOpen(false)
-    fetch('http://localhost:3000/api/v1/user/1/ingredients', {
+    fetch(`${ngrok}/api/v1/user/1/ingredients`, {
       method: 'POST',  
       headers: {
         "Content-Type": "application/json",
@@ -51,8 +52,9 @@ export default function Inventory({ navigation }){
         let ingredientName = fetchedInventory[i][0].name
         let plural = true
         fetchedInventory[i].forEach(instance => {
+          // console.log(instance.name, instance)
           totalQuantity = totalQuantity + instance.quantity
-          instances.push(instance)
+          instances.push({...instance, generateCombinedInventory: generateCombinedInventory, user: user})
         })
         if (totalQuantity == 1 || measurementType.toLowerCase() == 'oz' || measurementType.toLowerCase() == 'fl oz') {
           plural = false

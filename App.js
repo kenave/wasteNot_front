@@ -3,11 +3,16 @@ import { StyleSheet, Text, View } from 'react-native';
 // import Inventory from "./components/Inventory";
 // import Navbar from "./components/Navbar";
 // import AddItem from './components/AddItem';
-import Navigator from './routes/homeStack'
+import Navigator from './routes/homeStack';
+import { Appearance, AppearanceProvider, useColorScheme } from 'react-native-appearance';
 
 export default function App() {
+  let colorScheme = Appearance.getColorScheme()
+
   return (
-    <Navigator />
+    <AppearanceProvider>
+      <Navigator />
+    </AppearanceProvider>
   )
 
   // -------------------- BEFORE SCREENS IMPLEMENTED ------------------------ //
