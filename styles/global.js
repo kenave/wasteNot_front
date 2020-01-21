@@ -3,7 +3,13 @@ import { StyleSheet } from 'react-native';
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24
+    padding: 24,
+  },
+  sliderContainer: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: '50%',
+    backgroundColor: 'teal'
   },
   titleText: {
     fontSize: 18,

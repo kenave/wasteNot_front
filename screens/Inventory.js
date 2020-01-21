@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, FlatList, TouchableOpacity, Modal } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Modal } from "react-native";
 import { globalStyles } from '../styles/global'
 import Card from '../shared/card'
 import { Ionicons } from '@expo/vector-icons'
@@ -17,8 +17,8 @@ export default function Inventory({ navigation }){
       const result = await fetch(`http://localhost:3000/api/v1/user/${user}/ingredients`)
       .then(resp => resp.json())
       // .then(data => setInventory(data))
-      .then(data => console.log(data))
-      // .then(data => generateCombinedInventory(data))
+      // .then(data => console.log(data))
+      .then(data => generateCombinedInventory(data))
     }
     fetchInventory()
   }, [])
@@ -35,17 +35,38 @@ export default function Inventory({ navigation }){
     })
     .then(resp => resp.json())
     // .then(data => console.log(data))
-    .then(data => setInventory(data))
+    .then(data => generateCombinedInventory(data))
   }
 
   const generateCombinedInventory = (fetchedInventory) => {
-    ingredients = Object.keys(fetchedInventory)
+    let combinedInventory = []
+    let key = 0
+    let ingredients = Object.keys(fetchedInventory)
     console.log("generate inventory",ingredients)
-    let totalQuantity = 0
     if (ingredients.length > 0){
       ingredients.forEach(i => {
-        console.log("fetchedInventory", fetchedInventory[i])
-      });
+        let instances = []
+        let totalQuantity = 0 // total quantity for this ingredient
+        let measurementType = fetchedInventory[i][0].measurement_type // measurement type for this ingredient, using first instance as base
+        let ingredientName = fetchedInventory[i][0].name
+        let plural = true
+        fetchedInventory[i].forEach(instance => {
+          totalQuantity = totalQuantity + instance.quantity
+          instances.push(instance)
+        })
+        if (totalQuantity == 1 || measurementType.toLowerCase() == 'oz' || measurementType.toLowerCase() == 'fl oz') {
+          plural = false
+        }
+        combinedInventory.push({
+          id: key.toString(),
+          name: ingredientName,
+          quantity: totalQuantity,
+          measurementType: plural ? (measurementType + 's') : measurementType,
+          instances: instances
+        })
+        key++
+      })
+      setInventory(combinedInventory)
     }
   }
 
@@ -68,18 +89,18 @@ export default function Inventory({ navigation }){
         style={globalStyles.modalToggle}
         onPress={() => setModalOpen(true)}
       />
-      {console.log("INVENTORY:", inventory)}
+      {/* {console.log("INVENTORY:", inventory)} */}
       <FlatList
         keyExtractor={(item) => item.id}
         data={inventory}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => {
-            console.log('item:', item)
+            // console.log('item:', item)
             navigation.navigate('ItemDetails', item)
           }}>
             <Card>
               <Text style={globalStyles.titleTextName}>{item.name}</Text>
-              <Text style={globalStyles.titleTextQuantity}>{item.quantity} {item.measurement_type}</Text>
+              <Text style={globalStyles.titleTextQuantity}>{item.quantity} {item.measurementType}</Text>
             </Card>
           </TouchableOpacity>
         )}
