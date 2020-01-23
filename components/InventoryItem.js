@@ -103,7 +103,31 @@ const calculateDaysToExpiry = (item) => {
   else if (daysToExpiry < 1) {
     return 'Expired!'
   }
-  else { 
+  else if (daysToExpiry > 30) {
+    let months = Math.floor(daysToExpiry / 30)
+    if (months === 1) {
+      return `Expires in ${months} month`
+    } else if (months >= 12) {
+      let years = Math.floor(months / 12)
+      months = months % 12
+      if (years === 1 && months === 0) {
+        return `Expires in ${years} year`
+      } else if (years === 1 && months !== 0) {
+        if (months === 1) {
+          return `Expires in ${years} year and ${months} month`
+        }
+        return `Expires in ${years} year and ${months} months`
+      }
+      if (months === 1) {
+        return `Expires in ${years} years and ${months} month`
+      } else if (years !== 1 && months === 0) {
+        return `Expires in ${years} years`
+      }
+      return `Expires in ${years} years and ${months} months`
+    } else {
+      return `Expires in ${months} months`
+    }
+  } else {
     return `Expires in ${daysToExpiry} days`
   }
 }

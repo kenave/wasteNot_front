@@ -4,11 +4,24 @@ import { Formik } from 'formik';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { globalStyles } from '../styles/global';
 import ReactNativePickerModule from "react-native-picker-module";
+import * as yup from 'yup';
+
+const reviewSchema = yup.object({
+  name: yup.string()
+    .required()
+    .trim(),
+  quantity: yup.number()
+    .required()
+    .max(999),
+  measurementType: yup.string()
+    .required(),
+  expirationDate: yup.string()
+    .required()
+})
 
 export default function AddItem(props) {
   const now = new Date().toDateString().slice(4).split(' ').join('-')
   const [datePickerVisible, setDatePickerVisible] = useState(false)
-  const [unitPickerVisible, setUnitPickerVisible] = useState(false)
   const unitTypes = [
     "----",
     "Gallon",
@@ -41,6 +54,7 @@ export default function AddItem(props) {
     <View style={{...globalStyles.container}}>
       <Formik style={styles.form}
         initialValues={{name: '', quantity: '', measurementType: 'Unit Type', datePurchased: now, expirationDate: 'Expiration Date', user:'1'}}
+        validationSchema={reviewSchema}
         onSubmit={(values) => {
           console.log("submitted:",values)
           props.handleAdd(values)
