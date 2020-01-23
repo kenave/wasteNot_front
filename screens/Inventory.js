@@ -74,23 +74,6 @@ export default function Inventory({ navigation }){
 
   return (
     <View style={globalStyles.container}>
-      <Modal visible={modalOpen} animationType='slide'>
-        <View style={globalStyles.modalContent}>
-          <Ionicons
-            name='ios-close'
-            size={24}
-            style={{...globalStyles.modalToggle, ...globalStyles.modalClose}}
-            onPress={() => setModalOpen(false)}
-          />
-          <AddItem handleAdd={handleAdd}/>
-        </View>
-      </Modal>
-      <Ionicons 
-        name='ios-add'
-        size={24}
-        style={globalStyles.modalToggle}
-        onPress={() => setModalOpen(true)}
-      />
       {/* {console.log("INVENTORY:", inventory)} */}
       <FlatList
         keyExtractor={(item) => item.id}
@@ -106,6 +89,23 @@ export default function Inventory({ navigation }){
             </Card>
           </TouchableOpacity>
         )}
+      />
+      <Modal visible={modalOpen} animationType='fade'>
+        <View style={{...globalStyles.modalContent, backgroundColor: 'teal'}}>
+          <AddItem handleAdd={handleAdd}/>
+          <Ionicons
+            name='ios-remove-circle-outline'
+            size={36}
+            style={{...globalStyles.modalClose, color: 'gainsboro'}}
+            onPress={() => setModalOpen(false)}
+          />
+        </View>
+      </Modal>
+      <Ionicons 
+        name='ios-add-circle-outline'
+        size={36}
+        style={globalStyles.modalToggle}
+        onPress={() => setModalOpen(true)}
       />
     </View>
   )

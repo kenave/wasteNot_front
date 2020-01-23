@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: '5%',
   },
   sliderContainer: {
     flex: 1,
@@ -57,18 +57,21 @@ export const globalStyles = StyleSheet.create({
     marginVertical: 10,
   },
   modalToggle: {
-    marginBottom: 10,
+    // marginBottom: 10,
     borderWidth: 0,
     borderColor: '#f2f2f2',
     padding: 10,
     borderRadius: 10,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    color: 'teal'
   },
   modalClose: {
-    marginTop: 40,
-    marginBottom: 0
+    marginBottom: '5%',
+    alignSelf: 'center',
+    color: 'teal'
   },
   modalContent: {
+    paddingTop: '10%',
     flex: 1
   }
 })
