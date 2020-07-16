@@ -48,7 +48,7 @@ wasteNot is an iOS application that helps a user keep track of the food they hav
 2. Via terminal/console, navigate to `wasteNot_back` and run `bundle install`.
 3. Run `rails db:create`.
 4. Run `rails db:migrate`.
-5. Run 'rails db:seed`. This will give you a test account with the name `TestUser`.
+5. Run `rails db:seed`. This will give you a test account with the name `TestUser`.
 6. Run `rails s`, taking note of the port (should be 3000).
 7. In a new terminal window, run `ngrok http 3000` (replacing 3000 with the necessary port). Copy the http link listed under 'forwarding'.
 8. Navigate to `/wasteNot_back/config/environments/development.rb`.
