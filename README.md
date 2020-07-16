@@ -4,6 +4,7 @@ A simple, sleek iPhone app built using React Native, Ruby on Rails, and PostgreS
 
 ## Table of Contents
 * [General Info and Demo](#general-info)
+* [Images](#images)
 * [Technologies and Libraries Used](#technologies-and-libraries-used)
 * [Setup](#setup)
 * [Status](#status)
@@ -15,6 +16,11 @@ wasteNot is an iOS application that helps a user keep track of the food they hav
 
 * [Video demo (YouTube)](https://www.youtube.com/watch?v=CMciJQn_SA4&feature=youtu.be)
 * [Back-End repository](https://github.com/kenave/wasteNot_back)
+
+## Images
+
+<img src="/images/inventory_screen.PNG" alt="sample inventory screen" width="300"> <img src="/images/new_item.PNG" alt="new item screen" width="300"> <img src="/images/expired_milk.PNG" alt="expired milk" width="300">
+<img src="/images/quantity_slider.PNG" alt="tap and hold to bring up the quantity slider for liquids or container items" width="300"> <img src="/images/eggs.PNG" alt="these eggs are about to expire, we should probably cook them!" width="300"> <img src="/images/quantity_picker.PNG" alt="tap and hold to bring up the quantity picker for counted items" width="300">
 
 ## Technologies and Libraries Used
 
