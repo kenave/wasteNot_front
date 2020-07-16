@@ -10,7 +10,7 @@ function Inventory() {
 
   useEffect(() => {
     const fetchInventory = async () => {
-      let id = 1
+      let id = 1 // hard coded ID for testing, user creation on to-do list
       const result = await fetch(`http://localhost:3000/api/v1/user/${id}/ingredients`)
         .then(resp => resp.json())
         .then(data => setInventory(data))
@@ -18,12 +18,6 @@ function Inventory() {
 
     fetchInventory()
   }, [])
-
-  // const pressHandler = (key) => {
-  //   showPage(() => {
-
-  //   })
-  // }
 
   return (
     <View style={styles.listContainer}>

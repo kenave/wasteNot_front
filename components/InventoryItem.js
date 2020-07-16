@@ -96,7 +96,7 @@ const calculateDaysToExpiry = (item) => {
   now.setHours(0,0,0,0)
   let expiration_date = new Date(item.expiration_date)
   let timeToExpiry = expiration_date - now
-  let daysToExpiry = Math.floor((timeToExpiry / 86400000))
+  let daysToExpiry = Math.ceil((timeToExpiry / 86400000))
   if (daysToExpiry === 1) {
     return 'Expires tomorrow!'
   }

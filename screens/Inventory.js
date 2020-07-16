@@ -9,7 +9,7 @@ import { ngrok } from "../shared/ngrok";
 export default function Inventory({ navigation }){
   const [modalOpen, setModalOpen] = useState(false)
   const [inventory, setInventory] = useState([
-    {"id": "1", "name": "server loading", "quantity": "please wait...", "measurement_type": ""}
+    {"id": "1", "name": "You have no items", "quantity": "Add below", "measurement_type": ""}
   ])
   const [user, setUser] = useState('1')
 
