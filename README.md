@@ -35,7 +35,7 @@ wasteNot is an iOS application that helps a user keep track of the food they hav
 * yup 0.28.0 - form validation
 * bundler 2.0.2
 
-## Steps to run app using Expo App
+## Steps to test wasteNot using Expo App
 
 0. Pre-requisites: PostgreSQL 12 installed and running, Ruby 2.6, Rails 6. An iOS simulator (Mac only) installed via [this tutorial](https://docs.expo.io/workflow/ios-simulator/), or an iPhone with the Expo App (via [Apple App Store](https://apps.apple.com/us/app/expo-client/id982107779)) is also required.
 1. Fork and clone the front end and [back end](https://github.com/kenave/wasteNot_back) repositories into a shared root folder.
