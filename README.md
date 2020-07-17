@@ -6,7 +6,7 @@ A simple, sleek iPhone app built using React Native, Ruby on Rails, and PostgreS
 * [General Info and Demo](#general-info)
 * [Images](#images)
 * [Technologies and Libraries Used](#technologies-and-libraries-used)
-* [Setup](#setup)
+* [Testing Setup](#steps-to-test-wastenot-using-expo-app)
 * [Status](#status)
 * [Sources](#sources)
 
